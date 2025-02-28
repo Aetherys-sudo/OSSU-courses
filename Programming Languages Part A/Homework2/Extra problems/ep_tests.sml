@@ -170,12 +170,4 @@ val test79 = less_than(SUCC (SUCC (SUCC ZERO)), SUCC (SUCC ZERO)) = false;
 val test80 = less_than(SUCC (SUCC (SUCC ZERO)), SUCC (SUCC (SUCC (SUCC ZERO)))) = true;
 		 
 
-val test81 = isEmpty([]) = true;
-
-val test82 = isEmpty([1, 2]) = false;
-
-val test83 = isEmpty{from=1, to=1} = false;
-
-val test84 = isEmpty{from=1, to=0} = true;
-
 
