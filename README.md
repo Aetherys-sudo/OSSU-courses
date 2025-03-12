@@ -3,4 +3,4 @@ A collection of my progress in the OSSU curriculum so far. The repo contains all
 
 We so far have:<br/>
 SPD (Systematic Program Design) - Solutions to all the problems + Final Projects ✅ <br/>
-Programming Languages A (Ongoing) - Homework2 done ■■■■■■□□□□ <br/>
+Programming Languages A (Ongoing) - Final Test done ✅<br/>
