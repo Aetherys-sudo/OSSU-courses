@@ -1,9 +1,9 @@
 /Programming Languages Part A/Peer reviews/
 /Programming Languages Part A/Homework[0-9]/*video_code_files/
-*.pdf
-*.rkt~
-*.sml~
 /Programming Languages Part A/Materials/
 /Programming Languages Part B/Homework[0-9]/compiled/
 /Programming Languages Part B/Materials/
+*.pdf
+*.rkt~
+*.sml~
 *.jpg
