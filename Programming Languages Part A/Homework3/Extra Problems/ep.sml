@@ -103,15 +103,3 @@ fun map_tree f tr =
     case tr of
 	Leaf => Leaf
       | Node (x, ltr, rtr) => Node (f x, map_tree f ltr, map_tree f rtr);
-
-fun fold_tree f acc tr =
-    case tr of
-	Leaf => acc
-      | Node (x, ltr, rtr) =>
-	let
-	    val lrst = fold_tree f (f x acc) ltr;
-	    val rrst = fold_tree f (f x acc) ltr;
-	in
-	    fold_tree f (f lrst rrst) tr
-	end;
-
