@@ -8,7 +8,8 @@ We so far have:<br/><br/>
   <li>SPD (Systematic Program Design) - Solutions to all the problems + Final Projects ✅ </li><br/>
   <li>Programming Languages A - Final Test done ✅</li><br/>
   <li>Programming Languages B - Final Test done ✅</li><br/>
-  <li>Programming Languages C - Final Test done ✅</li><br/><br/><br/>
+  <li>Programming Languages C - Final Test done ✅</li><br/>
+  <li>Class-Based Program Design - In progress ...</li><br/>
 </ul>
 <b><font style="font-size: 24px">Core math:</font></b><br/>
 <ul>
