@@ -86,7 +86,7 @@ class Person2 {
     }
     
     boolean isOlder(Person2 other) {
-    	return other.isBiggerAge(this.age);
+    	return this.isBiggerAge(other.age);
     }
     
     private boolean isBiggerAge(int age) {
@@ -98,7 +98,11 @@ class Person2 {
     }
     
     String perished() {
-    	return this.pet.isNoPet();
+    	if (this.pet.isNoPet()) {
+    		return this.name;
+    	} else {
+    		return "No pet has perished!";
+    	}
     }
 }
 
@@ -175,12 +179,13 @@ class ExamplesPets {
 	Person2 nancy = new Person2("Nancy", sekiro, 33);
 	Person2 ohno = new Person2("OhNo", noPet, 22);
 	
-	boolean testIsOlderThan(Tester t) {
+	boolean testIsOlder(Tester t) {
 		return t.checkExpect(bob.isOlder(luca), false) &&
 		t.checkExpect(luca.isOlder(bob), true) && 
-		t.checkExpect(luca.sameNamePet("Onix"), true) && 
-		t.checkExpect(luca.perished(), false) &&
-		t.checkExpect(ohno.perished(), true);
+		t.checkExpect(luca.sameNamePet("Onix"), true) &&
+		t.checkExpect(luca.sameNamePet("Sekiro"), false) && 
+		t.checkExpect(luca.perished(), "No pet has perished!") &&
+		t.checkExpect(ohno.perished(), "OhNo");
 	}
 }
 
