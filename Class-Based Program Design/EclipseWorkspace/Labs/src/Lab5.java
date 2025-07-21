@@ -188,7 +188,5 @@ class ExamplesCircleGame {
 	    int worldHeight = 1024;
 	    double tickRate = 1.0 / 60.0;
 	    return game.bigBang(worldWidth, worldHeight, tickRate);
-	  }
-		
-	
+	  }	
 }
