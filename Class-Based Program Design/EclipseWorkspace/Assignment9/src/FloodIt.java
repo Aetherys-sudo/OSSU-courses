@@ -29,11 +29,11 @@ class Cell {
 	}
 	
 	WorldImage drawAt(int x, int y, WorldImage background) {
-		int abs_x = x * FloodItWorld.CELL_SIZE + FloodItWorld.CELL_SIZE / 2;
-		int abs_y = y * FloodItWorld.CELL_SIZE + FloodItWorld.CELL_SIZE / 2;
+		int abs_x = x * FloodItWorld.CELL_SIZE + FloodItWorld.CELL_SIZE / 2 + 1;
+		int abs_y = y * FloodItWorld.CELL_SIZE + FloodItWorld.CELL_SIZE / 2 + 1;
 		WorldImage square = new RectangleImage(FloodItWorld.CELL_SIZE, FloodItWorld.CELL_SIZE, OutlineMode.SOLID, this.color);
 		
-		return new OverlayOffsetImage(square, abs_x - FloodItWorld.BOARD_ABS_SIZE / 2, abs_y - FloodItWorld.BOARD_ABS_SIZE / 2, background);
+		return new OverlayOffsetImage(square, -(abs_y - FloodItWorld.BOARD_ABS_SIZE / 2), -( abs_x - FloodItWorld.BOARD_ABS_SIZE / 2), background);
 	}
 }
 
@@ -41,9 +41,12 @@ class FloodItWorld extends World {
 	  static int BOARD_SIZE = 22;
 	  static int CELL_SIZE = 15;
 	  static int BOARD_ABS_SIZE = BOARD_SIZE * CELL_SIZE;
+	  static int MAX_MOVES = 10;
+	  
 	  // All the cells of the game
 	  ArrayList<Cell> board;
 	  ArrayList<Color> colorMap;
+	  int moveCount;
 	  
 	  FloodItWorld() {
 		  Random rand = new Random();
@@ -59,14 +62,19 @@ class FloodItWorld extends World {
 		  colorMap.add(Color.magenta);
 		  
 		  this.board = new ArrayList<Cell>();
-		  for (int i = BOARD_SIZE - 1; i >= 0; i --) {
-			  for (int j = BOARD_SIZE - 1; j >= 0; j --) {
-				  this.board.add(new Cell(j, i, colorMap.get(rand.nextInt(8)), false));
+		  for (int i = 0; i < BOARD_SIZE; i ++) {
+			  for (int j = 0; j < BOARD_SIZE; j ++) {
+				  if (i == 0 && j == 0) {
+					  this.board.add(new Cell(j, i, colorMap.get(rand.nextInt(8)), true));
+				  } else {
+					  this.board.add(new Cell(j, i, colorMap.get(rand.nextInt(8)), false));
+				  }
+				  
 			  }
 		  }
 		  
 		  configureCellConnections();
-		  
+		  this.moveCount = 0;
 	  }
 	  
 	  void configureCellConnections() {
@@ -95,8 +103,8 @@ class FloodItWorld extends World {
 		  WorldImage background = new RectangleImage(BOARD_ABS_SIZE, BOARD_ABS_SIZE, OutlineMode.SOLID, Color.white);
 		  
 		  
-		  for (int i = BOARD_SIZE - 1; i >= 0; i --) {
-			  for (int j = BOARD_SIZE - 1; j >= 0; j --) {
+		  for (int i = 0; i < BOARD_SIZE; i ++) {
+			  for (int j = 0; j < BOARD_SIZE; j ++) {
 				  background = this.board.get(BOARD_SIZE * i + j).drawAt(j, i, background);
 			  }
 		  }
@@ -109,6 +117,100 @@ class FloodItWorld extends World {
 		  scene.placeImageXY(getBackground(), BOARD_ABS_SIZE / 2, BOARD_ABS_SIZE / 2);
 		  return scene;
 	  }
+	  
+	  public void onMouseClicked(Posn pos) {
+		  int x_pos = pos.x / CELL_SIZE;
+		  int y_pos = pos.y / CELL_SIZE;
+		  this.moveCount += 1;
+		  Color fillColor = this.board.get(x_pos * BOARD_SIZE + y_pos).color;
+		  
+		  updateFloodedCells();
+		  fillFloodedCellsColor(fillColor);
+		  
+		  if (this.moveCount > MAX_MOVES) {
+			  this.endOfWorld("Game over");
+		  }
+	  }
+	  
+	  void updateFloodedCells() {
+		  for (int i = 0; i < BOARD_SIZE * BOARD_SIZE - 1; i ++) {
+			  if (board.get(i).left != null) {
+				  if (!board.get(i).left.flooded && board.get(i).flooded) {
+					  if (board.get(i).left.color.equals(board.get(i).color)) {
+						  board.get(i).left.flooded = true;
+	//					  updateFloodedCells(root.left);
+					  }
+				  } 
+			  }
+			  if (board.get(i).right != null) {
+				  if (!board.get(i).right.flooded && board.get(i).flooded) {
+					  if (board.get(i).right.color.equals(board.get(i).color)) {
+						  board.get(i).right.flooded = true;
+	//					  updateFloodedCells(root.right);
+					  }
+				  } 
+			  }
+			  
+			  if (board.get(i).top != null) {
+				  if (!board.get(i).top.flooded && board.get(i).flooded) {
+					  if (board.get(i).top.color.equals(board.get(i).color)) {
+						  board.get(i).top.flooded = true;
+	//					  updateFloodedCells(root.top);
+					  }
+				  } 
+			  }
+			  
+			  if (board.get(i).bottom != null) {
+				  if (!board.get(i).bottom.flooded && board.get(i).flooded) {
+					  if (board.get(i).bottom.color.equals(board.get(i).color)) {
+						  board.get(i).bottom.flooded = true;
+	//					  updateFloodedCells(root.bottom);
+					  }
+				  } 
+			  } 
+		  }
+	  }
+	  
+	  void fillFloodedCellsColor(Color fillColor) {
+		  for (int i = 0; i < BOARD_SIZE * BOARD_SIZE - 1; i ++) {
+			  if (board.get(i).flooded) {
+				  board.get(i).color = fillColor;
+			  }
+		  }
+	  }
+	  
+	  
+	  public void onKeyEvent(String key) {
+		  if (key.equals("r")) {
+			  Random rand = new Random();
+			  this.colorMap = new ArrayList<Color>();
+			  
+			  colorMap.add(Color.red);
+			  colorMap.add(Color.blue);
+			  colorMap.add(Color.green);
+			  colorMap.add(Color.yellow);
+			  colorMap.add(Color.pink);
+			  colorMap.add(Color.orange);
+			  colorMap.add(Color.cyan);
+			  colorMap.add(Color.magenta);
+			  
+			  this.board = new ArrayList<Cell>();
+			  for (int i = 0; i < BOARD_SIZE; i ++) {
+				  for (int j = 0; j < BOARD_SIZE; j ++) {
+					  if (i == 0 && j == 0) {
+						  this.board.add(new Cell(j, i, colorMap.get(rand.nextInt(8)), true));
+					  } else {
+						  this.board.add(new Cell(j, i, colorMap.get(rand.nextInt(8)), false));
+					  }
+					  
+				  }
+			  }
+			  
+			  configureCellConnections();
+			  this.moveCount = 0;
+		  }
+	  }
+	  
 }
 
 class ExamplesFlood {
