@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Assignment1/src"/>
+	<classpathentry kind="src" path="Assignment2/src"/>
+	<classpathentry kind="src" path="Assignment3/src"/>
+	<classpathentry kind="src" path="Assignment4/src"/>
+	<classpathentry kind="src" path="Assignment5/src"/>
+	<classpathentry kind="src" path="Assignment6/src"/>
+	<classpathentry kind="src" path="Assignment7/src"/>
+	<classpathentry kind="src" path="Assignment8/src"/>
+	<classpathentry kind="src" path="Assignment9/src"/>
+	<classpathentry kind="src" path="Lab10/src"/>
+	<classpathentry kind="src" path="Lab11/src"/>
+	<classpathentry kind="src" path="Lab7/src"/>
+	<classpathentry kind="src" path="Lab8/src"/>
+	<classpathentry kind="src" path="Lab9/src"/>
+	<classpathentry kind="src" path="Labs/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
